@@ -49,14 +49,15 @@ export default class OSSSign {
       .toString("base64");
   }
 
-  public sign(filename: string) {
+  public sign(filename?: string) {
     const expireAt = new Date().getTime() + this.expire;
     const expiration = new Date(expireAt).toISOString().split(".")[0] + "Z";
+    const fielkey = filename ?  this.defaultDir + '/' + filename : this.defaultDir;
     const policy = {
       expiration,
       conditions: [
         ["content-length-range", 0, 1048576000],
-        ["starts-with", this.defaultDir]
+        ["starts-with", "$key", fielkey]
       ]
     };
     const policyStr = JSON.stringify(policy);
