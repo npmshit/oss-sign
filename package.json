@@ -1,0 +1,33 @@
+{
+  "name": "@blueshit/oss-sign",
+  "version": "1.0.0",
+  "description": "阿里云OSS签名",
+  "main": "dist/index.js",
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts"
+  ],
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/node": "^9.6.5",
+    "ts-node": "^6.0.0",
+    "typescript": "^2.8.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npmshit/oss-sign.git"
+  },
+  "keywords": [
+    "oss-sign",
+    "aliyun-oss"
+  ],
+  "author": "Yourtion <yourtion@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/npmshit/oss-sign/issues"
+  },
+  "homepage": "https://github.com/npmshit/oss-sign#readme"
+}
