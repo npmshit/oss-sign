@@ -1,6 +1,6 @@
 {
   "name": "@blueshit/oss-sign",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "阿里云OSS签名",
   "main": "dist/index.js",
   "files": [
@@ -9,7 +9,8 @@
   ],
   "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "tsc"
   },
   "devDependencies": {
     "@types/node": "^9.6.5",
