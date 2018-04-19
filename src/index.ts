@@ -7,27 +7,43 @@ import assert from "assert";
 import crypto from "crypto";
 
 export interface IOption {
+  /** 秘钥ID */
   accessKeyId: string;
+  /** 秘钥Key */
   accessKeySecret: string;
+  /** OSS地址（http://***.oss-cn-hangzhou.aliyuncs.com） */
   endpoint?: string;
+  /** 默认过期时间（秒，默认30s） */
   expire?: number;
+  /** 默认上传路径前缀（末尾包含 / ） */
   defaultDir?: string;
+  /** 默认最大文件大小（字节） */
   maxSize?: number;
 }
 
 export interface ISignOption {
+  /** 目录前缀（包含 / ）*/
   dir?: string;
+  /** 过期时间（秒） */
   expire?: number;
+  /** 文件最大尺寸（字节） */
   maxSize?: number;
 }
 
 export interface ISignResult {
+  /** 策略 */
   policy: string;
+  /** 签名 */
   signature: string;
+  /** 过期时间（秒） */
   expire: number;
+  /** 密钥ID */
   accessid: string;
+  /** 上传host */
   host?: string;
+  /** 前缀 */
   dir?: string;
+  /** 上传的key */
   key?: string;
 }
 
@@ -47,16 +63,6 @@ export default class OSSSign {
   private defaultDir?: string;
   private maxSize?: number;
 
-  /**
-   * 构造函数
-   * @param {IOption} options 配置项
-   * @param {string} options.accessKeyId 秘钥ID AccessKeyId
-   * @param {string} options.accessKeySecret 秘钥Key AccessKeySecret
-   * @param {string} options.endpoint OSS地址
-   * @param {number} options.expire 默认过期时间（默认30s）
-   * @param {string} options.defaultDir 默认上传路径前缀
-   * @param {number} options.maxSize 默认最大文件大小（字节）
-   */
   constructor(options: IOption) {
     assert(typeof options.accessKeyId === "string", "请配置 AccessKeyId");
     assert(typeof options.accessKeySecret === "string", "请配置 AccessKeySecret");
@@ -77,11 +83,6 @@ export default class OSSSign {
   /**
    * 获取 OSS 签名
    * @link https://help.aliyun.com/document_detail/31988.html
-   * @param {string} filename 文件名
-   * @param {ISignOption} options 签名参数
-   * @param {string} options.dir 目录前缀
-   * @param {number} options.maxSize 文件最大尺寸（字节）
-   * @param {number} options.expire 过期时间（秒）
    */
   public sign(filename?: string, options: ISignOption = {}): ISignResult {
     const expireAt = new Date().getTime() + (options.expire || this.expire);
