@@ -1,5 +1,6 @@
 /**
  * @file OSS Sign
+ * @link https://help.aliyun.com/document_detail/31988.html
  * @author Yourtion Guo <yourtion@gmail.com>
  */
 
@@ -9,7 +10,7 @@ import crypto from "crypto";
 export interface IOption {
   accessKeyId: string;
   accessKeySecret: string;
-  host: string;
+  endpoint?: string;
   expire?: number;
   defaultDir?: string;
 }
@@ -17,15 +18,15 @@ export interface IOption {
 export default class OSSSign {
   private accessKeyId: string;
   private accessKeySecret: string;
-  private host: string;
   private expire: number;
-  private defaultDir: string;
+  private endpoint?: string;
+  private defaultDir?: string;
 
   /**
    * 构造函数
    * @param {IOption} options - 配置项
-   * @param {string} options.AccessKeyId - 秘钥 AccessKeyId
-   * @param {string} options.AccessKeySecret - 秘钥A ccessKeySecret
+   * @param {string} options.accessKeyId - 秘钥 AccessKeyId
+   * @param {string} options.accessKeySecret - 秘钥A ccessKeySecret
    */
   constructor(options: IOption) {
     assert(typeof options.accessKeyId === "string", "请配置 AccessKeyId");
@@ -33,12 +34,11 @@ export default class OSSSign {
       typeof options.accessKeySecret === "string",
       "请配置 AccessKeySecret"
     );
-    assert(typeof options.host === "string", "请配置 host");
     this.accessKeyId = options.accessKeyId;
     this.accessKeySecret = options.accessKeySecret;
-    this.host = options.host;
+    this.endpoint = options.endpoint;
     this.expire = options.expire || 30 * 1000;
-    this.defaultDir = options.defaultDir || "/";
+    this.defaultDir = options.defaultDir;
   }
 
   private getHash(data: string) {
@@ -51,8 +51,10 @@ export default class OSSSign {
 
   public sign(filename?: string) {
     const expireAt = new Date().getTime() + this.expire;
-    const expiration = new Date(expireAt).toISOString().split(".")[0] + "Z";
-    const fielkey = filename ?  this.defaultDir + '/' + filename : this.defaultDir;
+    const expiration = new Date(expireAt).toISOString();
+    const fielkey = filename
+      ? this.defaultDir + "/" + filename
+      : this.defaultDir;
     const policy = {
       expiration,
       conditions: [
@@ -69,7 +71,7 @@ export default class OSSSign {
       signature,
       expire,
       accessid: this.accessKeyId,
-      host: this.host,
+      host: this.endpoint,
       dir: this.defaultDir
     };
   }
