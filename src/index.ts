@@ -11,9 +11,7 @@ export interface IOption {
   accessKeyId: string;
   /** 秘钥Key */
   accessKeySecret: string;
-  /** OSS地址（http://***.oss-cn-hangzhou.aliyuncs.com） */
-  endpoint?: string;
-  /** 默认过期时间（秒，默认30s） */
+  /** 默认过期时间（毫秒，默认30s） */
   expire?: number;
   /** 默认上传路径前缀（末尾包含 / ） */
   defaultDir?: string;
@@ -24,7 +22,7 @@ export interface IOption {
 export interface ISignOption {
   /** 目录前缀（包含 / ）*/
   dir?: string;
-  /** 过期时间（秒） */
+  /** 过期时间（毫秒） */
   expire?: number;
   /** 文件最大尺寸（字节） */
   maxSize?: number;
@@ -35,7 +33,7 @@ export interface ISignResult {
   policy: string;
   /** 签名 */
   signature: string;
-  /** 过期时间（秒） */
+  /** 过期时间（毫秒） */
   expire: number;
   /** 密钥ID */
   accessid: string;
@@ -59,7 +57,6 @@ export default class OSSSign {
   private accessKeyId: string;
   private accessKeySecret: string;
   private expire: number;
-  private endpoint?: string;
   private defaultDir?: string;
   private maxSize?: number;
 
@@ -68,7 +65,6 @@ export default class OSSSign {
     assert(typeof options.accessKeySecret === "string", "请配置 AccessKeySecret");
     this.accessKeyId = options.accessKeyId;
     this.accessKeySecret = options.accessKeySecret;
-    this.endpoint = options.endpoint;
     this.expire = options.expire || 30 * 1000;
     this.defaultDir = options.defaultDir;
   }
@@ -109,7 +105,6 @@ export default class OSSSign {
       signature,
       expire,
       accessid: this.accessKeyId,
-      host: this.endpoint,
       dir: prefix,
       key: (prefix || "") + (filename || "")
     };

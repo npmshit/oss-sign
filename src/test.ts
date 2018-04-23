@@ -3,11 +3,12 @@ import OSSSign from "./index";
 const cli = new OSSSign({
   accessKeyId: "6MKOqxGiGU4AUk44",
   accessKeySecret: "ufu7nS8kS59awNihtjSonMETLI0KLy",
-  endpoint: "http://post-test.oss-cn-hangzhou.aliyuncs.com",
   defaultDir: "user-dir/"
 });
 
-const token = cli.sign();
+const token = cli.sign("icon-excel.png", {
+  maxSize: 1000000,
+});
 
 console.log(token);
 
@@ -68,7 +69,7 @@ function getBody(param: any, cb: any) {
 getBody(
   {
     name: "icon-excel.png",
-    key: "user-dir/${filename}",
+    key: "user-dir/icon-excel.png",
     policy: token.policy,
     OSSAccessKeyId: token.accessid,
     success_action_status: 200,
@@ -96,6 +97,7 @@ function post(payload: any, boundary: any) {
   reqHttps.setHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
   reqHttps.setHeader("Content-Length", Buffer.from(payload).length);
   reqHttps.write(payload);
+  // console.log(reqHttps.getHeaders());
   reqHttps.on("error", function(e) {
     console.error("error:" + e);
   });
