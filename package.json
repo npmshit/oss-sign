@@ -13,9 +13,9 @@
     "prepublishOnly": "tsc"
   },
   "devDependencies": {
-    "@types/node": "^9.6.5",
-    "ts-node": "^6.0.0",
-    "typescript": "^2.8.1"
+    "@types/node": "^10.3.4",
+    "ts-node": "^6.1.2",
+    "typescript": "^2.9.2"
   },
   "repository": {
     "type": "git",
