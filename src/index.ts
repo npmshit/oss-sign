@@ -67,6 +67,7 @@ export default class OSSSign {
     this.accessKeySecret = options.accessKeySecret;
     this.expire = options.expire || 30 * 1000;
     this.defaultDir = options.defaultDir;
+    this.maxSize = options.maxSize;
   }
 
   private getHash(data: string) {
