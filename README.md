@@ -3,7 +3,7 @@
 阿里云OSS签名
 
 ```javascript
-const OSSSign = require("@blueshit/oss-sign");
+const OSSSign = require("@blueshit/oss-sign").default;
 
 const signer = new OSSSign({
   accessKeyId: 'xxx',
